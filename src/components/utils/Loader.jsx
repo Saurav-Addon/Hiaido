@@ -9,7 +9,7 @@ const Loader = () => {
           cx="20"
           cy="20"
           r="17.5"
-          pathlength="100"
+          pathLength="100"
           stroke-width="5px"
           fill="none"
         />
@@ -18,7 +18,7 @@ const Loader = () => {
           cx="20"
           cy="20" 
           r="17.5"
-          pathlength="100"
+          pathLength="100"
           stroke-width="5px"
           fill="none"
         />

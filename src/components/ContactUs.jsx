@@ -184,7 +184,7 @@ const ContactUs = () => {
               <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div>
                   <label
-                    for="first-name"
+                    htmlFor="first-name"
                     className="block text-sm font-semibold leading-6 text-gray-900"
                   >
                     First name
@@ -204,7 +204,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <label
-                    for="last-name"
+                    htmlFor="last-name"
                     className="block text-sm font-semibold leading-6 text-gray-900"
                   >
                     Last name
@@ -213,7 +213,7 @@ const ContactUs = () => {
                     <input
                       type="text"
                       id="last-name"
-                      autocomplete="family-name"
+                      autoComplete="family-name"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="last_name"
                       value={formData.last_name}
@@ -224,7 +224,7 @@ const ContactUs = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block text-sm font-semibold leading-6 text-gray-900"
                   >
                     Email
@@ -233,7 +233,7 @@ const ContactUs = () => {
                     <input
                       type="email"
                       id="email"
-                      autocomplete="email"
+                      autoComplete="email"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="email"
                       value={formData.email}
@@ -244,7 +244,7 @@ const ContactUs = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <label
-                    for="message"
+                    htmlFor="message"
                     className="block text-sm font-semibold leading-6 text-gray-900"
                   >
                     Message

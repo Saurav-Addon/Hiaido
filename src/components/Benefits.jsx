@@ -93,11 +93,11 @@ const Benefits = () => {
             <img src={azure} alt="azure"/>
             <img src={gcp} alt="gcp"/>
         </div>
-        <div class="relative h-auto isolate bg-n-8">
-        <div class="mx-auto mt-16 grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-          <div class="relative bg-n-8 px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-32">
-            <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-              <div class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden  lg:w-1/2">
+        <div className="relative h-auto isolate bg-n-8">
+        <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+          <div className="relative bg-n-8 px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-32">
+            <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
+              <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden  lg:w-1/2">
                 <svg
                   class="absolute inset-0 h-full w-full  "
                   aria-hidden="true"
@@ -165,7 +165,7 @@ const Benefits = () => {
               <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div>
                   <label
-                    for="first-name"
+                    htmlFor="first-name"
                     className="block text-sm font-semibold leading-6 text-white"
                   >
                     First name
@@ -174,7 +174,7 @@ const Benefits = () => {
                     <input
                       type="text"
                       id="first-name"
-                      autocomplete="given-name"
+                      autoComplete="given-name"
                       className="block w-full bg-white rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="first_name"
                       required= {true}
@@ -185,7 +185,7 @@ const Benefits = () => {
                 </div>
                 <div>
                   <label
-                    for="last-name"
+                    htmlFor="last-name"
                     className="block text-sm font-semibold leading-6 text-white"
                   >
                     Last name
@@ -194,7 +194,7 @@ const Benefits = () => {
                     <input
                       type="text"
                       id="last-name"
-                      autocomplete="family-name"
+                      autoComplete="family-name"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="last_name"
                       required= {true}
@@ -205,7 +205,7 @@ const Benefits = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block text-sm font-semibold leading-6 text-white"
                   >
                     Email
@@ -214,7 +214,7 @@ const Benefits = () => {
                     <input
                       type="email"
                       id="email"
-                      autocomplete="email"
+                      autoComplete="email"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="email"
                       required= {true}
@@ -225,7 +225,7 @@ const Benefits = () => {
                 </div>
                 <div className="sm:col-span-2">
                   <label
-                    for="message"
+                    htmlFor="message"
                     className="block text-sm font-semibold leading-6 text-white"
                   >
                     Message
