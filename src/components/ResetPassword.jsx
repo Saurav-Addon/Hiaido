@@ -10,7 +10,8 @@ const Resetshowpassword = () => {
   const [showpassword, setShowpassword] = React.useState(false);
   const [showcfpassword, setShowCfpassword] = React.useState(false);
 
-  const userId = window.location.pathname.split("=")[1];
+  const userId = window.location.href.split("=")[1];
+
 
   const navigate = useNavigate();
 

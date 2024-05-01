@@ -22,13 +22,15 @@ const Login = () => {
     <form className="mt-6" action="#" method="POST">
       <div>
         <label className="block text-gray-700">Email Address</label>
-        <input type="email" name="" id="username" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus required />
+        <input type="email" name="" id="username" placeholder="Enter Email Address" 
+        className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white text-orange-500
+        focus:outline-none" autoFocus required />
       </div>
 
       <div className="mt-4">
         <label className="block text-gray-700">Password</label>
         <input type="password" name="" id="password" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-              focus:bg-white focus:outline-none" required />
+              focus:bg-white focus:outline-none text-orange-500" required />
       </div>
 
       <div className="text-right mt-2">
