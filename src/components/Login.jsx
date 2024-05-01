@@ -17,7 +17,7 @@ const Login = () => {
   <div className="w-full h-100">
 
 
-    <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
+    <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12 text-orange-500">Log in to your account</h1>
 
     <form className="mt-6" action="#" method="POST">
       <div>
@@ -32,7 +32,7 @@ const Login = () => {
       </div>
 
       <div className="text-right mt-2">
-        <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
+        <a href="/forgot-password" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
       </div>
 
       <button type="submit" className="w-full block bg-orange-500 hover:bg-yellow-500 focus:bg-orange-500 hover:text-black text-white font-semibold rounded-full

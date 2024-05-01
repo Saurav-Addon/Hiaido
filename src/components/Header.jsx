@@ -86,7 +86,7 @@ const Header = () => {
         >
          Pricing
         </Link>
-        <Button className="hidden lg:flex" to="/login">
+        <Button className="hidden lg:flex" href="/login">
           Sign In to Web portal
         </Button>
 

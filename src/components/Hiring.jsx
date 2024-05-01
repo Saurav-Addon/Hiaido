@@ -2,15 +2,15 @@ import Header from "./Header";
 import "../index.css";
 import Button from "./Button";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "./utils/Loader";
 
 const Hiring = () => {
-
   const navigate = useNavigate();
 
+  const [isLoader, setIsLoader] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     last_name: "",
@@ -32,6 +32,7 @@ const Hiring = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    setIsLoader(true);
     const bodyFormData = new FormData();
     bodyFormData.append("email", formData.email);
     bodyFormData.append("first_name", formData.first_name);
@@ -45,24 +46,28 @@ const Hiring = () => {
       url: "https://apihiaido.addonwebtech.com/public/api/hiringData",
       data: bodyFormData,
       headers: {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": "multipart/form-data",
       },
     })
       .then((response) => {
         if (response?.data.status === true) {
-          toast(response?.data.message);
           refreshPage();
+          setIsLoader(false);
+          toast.success(response?.data.message);
+
           setTimeout(() => {
-            navigate('/');
-          }, 2000);              
+            navigate("/");
+          }, 2000);
         } else {
-          toast("Something went wrong!");
+          toast.error("Something went wrong!");
         }
       })
       .catch((err) => {
+        refreshPage();
+        setIsLoader(false);
         console.error("Error while saving data" + err);
         toast("Internal Server Error!");
-        refreshPage();
+
         return;
       });
   };
@@ -875,11 +880,11 @@ const Hiring = () => {
           />
           <div>
             <Button type="submit" className=" mt-8 lg:flex">
-              Submit
+              {isLoader ? <Loader/> : "Submit"}
             </Button>
-            <ToastContainer />
           </div>
         </form>
+
       </div>
     </>
   );

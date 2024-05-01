@@ -1,64 +1,62 @@
 import { curve, heroBackground, robot } from "../assets";
 import Button from "./Button";
 import Section from "./Section";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useRef, useState } from "react";
 import axios from "axios";
-
+import Loader from "./utils/Loader";
 const Hero = () => {
-  const parallaxRef = useRef(null);
+  
+  const [emailErr, setEmailErr] = useState("");
+  const [data, setData] = useState("");
+  const [isLoader,setIsLoader] = useState(false);
 
-  const [data, setData] = useState({
-    email: "",
-  });
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+  const checkEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    setIsLoader(true);
+    if (checkEmail(data)) {
       const bodyFormData = new FormData();
-      bodyFormData.append("email", data.email);
+      bodyFormData.append("email", data);
 
       axios({
         method: "POST",
         url: "https://apihiaido.addonwebtech.com/public/api/demo",
         data: bodyFormData,
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
-
       })
         .then((response) => {
-
           if (response?.data.status === true) {
-            toast(response?.data.message);
-           
+            setIsLoader(false);
+            toast.success(response?.data.message);
+            setTimeout(() => {
+              setData('');
+            }, 2000)
           } else {
-            toast("Something went wrong!");
+            setIsLoader(false);
+            toast.error("Something went wrong!");
           }
         })
         .catch((err) => {
+          setIsLoader(false);
           console.error("Error while saving data" + err);
-          toast("Internal Server Error!");
+          toast.error("Internal Server Error!");
         });
-
-        refreshPage();
-    
+    } else {
+      setIsLoader(false);
+      setEmailErr("Email is not valid");
+      toast.error(emailErr);
+    }
   };
 
-  const refreshPage = () => {
-    setData({
-      email: "",
-    });
-  };
   return (
     <Section
       className="pt-[5rem] -mt-[5.27rem]"
@@ -66,7 +64,7 @@ const Hero = () => {
       customPaddings
       id="hero"
     >
-      <div className="container relative" ref={parallaxRef}>
+      <div className="container relative">
         <div className="relative z-1 max-w-[55rem] mx-auto text-center">
           <h1 className="h1 mt-[4rem] mb-6">
             The Next Generation &nbsp;&nbsp;
@@ -97,23 +95,24 @@ const Hero = () => {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mt-3">
-          <div
-            className="flex flex-wrap justify-center items-center gap-6"
-          >
+          <div className="flex flex-wrap justify-center items-center gap-6">
             <input
-              onChange={handleInputChange}
-              className="bg-white text-black mr-6 placeholder:p-2 h-8 rounded decoration-none font-code placeholder:text-black "
+              onChange={(e) => setData(e.target.value)}
+              className="bg-white text-black mr-6 placeholder:p-2 h-8 rounded decoration-
+               font-code placeholder:text-black p-2 w-64 "
               type="text"
               name="email"
-              value={data.email}
+              value={data}
               placeholder="email"
               required={true}
             />
-            <Button type="submit">Request a Demo</Button>
-           
+            <Button type="submit">
+              {isLoader ? <Loader /> : 
+              'Request a Demo'}</Button>
           </div>
         </form>
-        <ToastContainer autoClose={2000}/>
+
+       
       </div>
     </Section>
   );

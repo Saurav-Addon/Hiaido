@@ -5,12 +5,16 @@ import admin from "../assets/images/admin.png";
 import place from "../assets/images/place.png";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loader from "./utils/Loader";
+import Button from "./Button";
 
 const ContactUs = () => {
   const navigate = useNavigate();
+  
+  const [isLoader,setIsLoader] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     last_name: "",
@@ -29,7 +33,7 @@ const ContactUs = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    setIsLoader(true)
     const bodyFormData = new FormData();
     bodyFormData.append("email", formData.email);
     bodyFormData.append("first_name", formData.first_name);
@@ -42,22 +46,23 @@ const ContactUs = () => {
       data: bodyFormData,
     })
       .then((response) => {
-        console.log(response,'res')
-        console.log(response.data.message)
         if (response?.data.status === true) {
-          toast(response?.data.message);
+          setIsLoader(false);
+          toast.success(response?.data.message);
           refreshPage();
           setTimeout(() => {
             navigate('/');
           }, 2000);              
          
         } else {
-          toast("Something went wrong!");
+          setIsLoader(false);
+          toast.error("Something went wrong!");
         }
       })
       .catch((err) => {
+        setIsLoader(false)
         console.error("Error while saving data" + err);
-        toast("Internal Server Error!");
+        toast.error("Internal Server Error!");
         refreshPage();
         return;
       });
@@ -258,13 +263,12 @@ const ContactUs = () => {
                 </div>
               </div>
               <div className="mt-8 flex justify-end">
-                <button
-                  type="submit"
-                  className="w-max  rounded-2xl border-2 border-[#0057ff] bg-[#0057ff]  px-5 py-1.5 text-sm font-semibold text-white transition-colors duration-150 ease-in-out hover:border-blue-400 hover:bg-blue-400"
-                >
-                  Send message
-                </button>
-                <ToastContainer className="toast-position"/>
+             
+            <Button type="submit" className=" mt-8 text-n-8 lg:flex">
+              {isLoader ? <Loader/> : "Send Message"}
+            </Button>
+        
+       
               </div>
             </div>
        
