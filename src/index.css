@@ -195,7 +195,7 @@ input[type="file"]::file-selector-button:active {
 
 .loader {
   --uib-size: 35px;
-  --uib-color: rgb(255, 0, 0);
+  --uib-color: #92f5df;
   --uib-speed: 0.8s;
   --uib-bg-opacity: 0.1;
   height: var(--uib-size);

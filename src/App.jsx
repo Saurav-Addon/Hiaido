@@ -10,6 +10,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import OtpScreen from "./components/OtpScreen";
 import ResetPassword from "./components/ResetPassword";
 import ComingSoon from "./components/ComingSoon";
+import CreatePassword from "./components/CreatePassword";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/otp" element={<OtpScreen numberOfDigits={6}/>} />
         <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/create-password"  element={<CreatePassword/>}/>
         </Routes>
       </div>
 
