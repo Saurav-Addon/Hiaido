@@ -4,24 +4,18 @@ import Section from "./Section";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Loader from "./utils/Loader";
-const Hero = () => {
-  
-  const [emailErr, setEmailErr] = useState("");
-  const [data, setData] = useState("");
-  const [isLoader,setIsLoader] = useState(false);
 
-  const checkEmail = (email) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  };
+const Hero = () => {
+  const [data, setData] = useState("");
+  const [isLoader, setIsLoader] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsLoader(true);
-    if (checkEmail(data)) {
+    if (checkEmail()) {
+      setIsLoader(true);
       const bodyFormData = new FormData();
       bodyFormData.append("email", data);
 
@@ -38,8 +32,8 @@ const Hero = () => {
             setIsLoader(false);
             toast.success(response?.data.message);
             setTimeout(() => {
-              setData('');
-            }, 2000)
+              setData("");
+            }, 2000);
           } else {
             setIsLoader(false);
             toast.error("Something went wrong!");
@@ -50,11 +44,30 @@ const Hero = () => {
           console.error("Error while saving data" + err);
           toast.error("Internal Server Error!");
         });
-    } else {
-      setIsLoader(false);
-      setEmailErr("Email is not valid");
-      toast.error(emailErr);
     }
+  };
+
+  const checkEmail = () => {
+    var isValid = true;
+
+    if (typeof data !== "undefined") {
+      let lastAtPos = data.lastIndexOf("@");
+      let lastDotPos = data.lastIndexOf(".");
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          data.indexOf("@@") === -1 &&
+          lastDotPos > 2 &&
+          data?.length - lastDotPos > 2
+        )
+      ) {
+        isValid = false;
+        toast.error("Email is not valid");
+      }
+    }
+
+    return isValid;
   };
 
   return (
@@ -97,7 +110,7 @@ const Hero = () => {
         <form onSubmit={handleSubmit} className="mt-3">
           <div className="flex flex-wrap justify-center items-center gap-6">
             <input
-              onChange={(e) => setData(e.target.value)}
+              onChange={(e) => setData(e.target.value.replace(/\s/g, ""))}
               className="bg-white text-black mr-6 placeholder:p-2 h-8 rounded decoration-
                font-code placeholder:text-black p-2 w-64 "
               type="text"
@@ -107,12 +120,10 @@ const Hero = () => {
               required={true}
             />
             <Button type="submit">
-              {isLoader ? <Loader /> : 
-              'Request a Demo'}</Button>
+              {isLoader ? <Loader /> : "Request a Demo"}
+            </Button>
           </div>
         </form>
-
-       
       </div>
     </Section>
   );
