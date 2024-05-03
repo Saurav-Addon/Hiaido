@@ -20,56 +20,92 @@ const Hiring = () => {
     document: null,
   });
 
+  const checkEmail = () => {
+    var isValid = true;
+
+    if (!formData.email || !formData.email.trim()) {
+      isValid = false;
+      toast.error("Please enter Email!");
+    } else if (typeof formData.email !== "undefined") {
+      let lastAtPos = formData.email.lastIndexOf("@");
+      let lastDotPos = formData.email.lastIndexOf(".");
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          formData.email.indexOf("@@") === -1 &&
+          lastDotPos > 2 &&
+          formData.email?.length - lastDotPos > 2
+        )
+      ) {
+        isValid = false;
+        toast.error("Email is not valid");
+      }
+    }
+
+    if (!formData.phone) {
+      isValid = false;
+      toast.error("Please enter mobile");
+    } else if (!/^\d{8,}$/.test(formData.phone)) {
+      isValid = false;
+      toast.error("Please enter a valid mobile");
+    }
+
+    return isValid;
+  };
+
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value.replace(/\s/g, ""),
     });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setIsLoader(true);
-    const bodyFormData = new FormData();
-    bodyFormData.append("email", formData.email);
-    bodyFormData.append("first_name", formData.first_name);
-    bodyFormData.append("last_name", formData.last_name);
-    bodyFormData.append("country_code", formData.country_code);
-    bodyFormData.append("phone", formData.phone);
-    bodyFormData.append("document", formData.document);
+    if (checkEmail()) {
+      setIsLoader(true);
+      const bodyFormData = new FormData();
+      bodyFormData.append("email", formData.email);
+      bodyFormData.append("first_name", formData.first_name);
+      bodyFormData.append("last_name", formData.last_name);
+      bodyFormData.append("country_code", formData.country_code);
+      bodyFormData.append("phone", formData.phone);
+      bodyFormData.append("document", formData.document);
 
-    axios({
-      method: "POST",
-      url: "https://apihiaido.addonwebtech.com/public/api/hiringData",
-      data: bodyFormData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => {
-        if (response?.data.status === true) {
+      axios({
+        method: "POST",
+        url: "https://apihiaido.addonwebtech.com/public/api/hiringData",
+        data: bodyFormData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((response) => {
+          if (response?.data.status === true) {
+            refreshPage();
+            setIsLoader(false);
+            toast.success(response?.data.message);
+
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          } else {
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => {
           refreshPage();
           setIsLoader(false);
-          toast.success(response?.data.message);
+          console.error("Error while saving data" + err);
+          toast.error("Internal Server Error!");
 
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        } else {
-          toast.error("Something went wrong!");
-        }
-      })
-      .catch((err) => {
-        refreshPage();
-        setIsLoader(false);
-        console.error("Error while saving data" + err);
-        toast.error("Internal Server Error!");
-
-        return;
-      });
+          return;
+        });
+    }
   };
 
   const refreshPage = () => {
@@ -95,7 +131,6 @@ const Hiring = () => {
       }
     }
   };
-
 
   return (
     <>
@@ -167,7 +202,6 @@ const Hiring = () => {
                 onChange={handleInputChange}
                 value={formData.country_code}
                 name="country_code"
-              
               >
                 <option className=" text-blue-950 bg-[#fafafa]" value="">
                   Country Code
@@ -854,7 +888,7 @@ const Hiring = () => {
             </div>
             <div className="relative z-0 w-full mb-5 group">
               <input
-                type="tel"
+                type="number"
                 pattern="[8-14]"
                 name="phone"
                 onChange={handleInputChange}
@@ -881,11 +915,10 @@ const Hiring = () => {
           />
           <div>
             <Button type="submit" className=" mt-8 lg:flex">
-              {isLoader ? <Loader/> : "Submit"}
+              {isLoader ? <Loader /> : "Submit"}
             </Button>
           </div>
         </form>
-
       </div>
     </>
   );

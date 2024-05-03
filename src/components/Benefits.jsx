@@ -29,12 +29,42 @@ const Benefits = () => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value.replace(/\s/g, ""),
     });
+  };
+
+  const checkEmail = () => {
+    var isValid = true;
+
+    if(!formData.email || !formData.email.trim()){
+      isValid = false;
+      toast.error('Please enter Email!')
+    }
+
+    if (typeof formData.email !== "undefined") {
+      let lastAtPos = formData.email.lastIndexOf("@");
+      let lastDotPos = formData.email.lastIndexOf(".");
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          formData.email.indexOf("@@") === -1 &&
+          lastDotPos > 2 &&
+          formData.email?.length - lastDotPos > 2
+        )
+      ) {
+        isValid = false;
+        toast.error("Email is not valid");
+      }
+    }
+
+    return isValid;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
+    if(checkEmail()) {
     setIsLoader(true);
     const bodyFormData = new FormData();
     bodyFormData.append("email", formData.email);
@@ -62,6 +92,7 @@ const Benefits = () => {
         toast.error("Internal Server Error!");
         refreshPage();
       });
+    }
   };
 
   const refreshPage = () => {
