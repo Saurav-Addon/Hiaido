@@ -45,7 +45,7 @@ const Header = () => {
             openNavigation ? "flex" : "hidden"
           } fixed top-[7rem] left-0 right-0 bottom-0  lg:static lg:flex lg:mx-auto lg:bg-transparent`}
         >
-          <div className="relative lg:hidden z-2 flex flex-col items-center justify-center m-auto lg:flex-row">
+      <div className="relative lg:hidden z-2 flex flex-col items-center justify-center m-auto lg:flex-row">
             {navigation.map((item) => (
               <Link
                 key={item.id}
