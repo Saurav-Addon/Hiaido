@@ -16,6 +16,7 @@ import Button from './Button';
 const Benefits = () => {
 
   const [isLoader,setIsLoader] = useState(false);
+  const [error, setError] = useState({});
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,19 +30,30 @@ const Benefits = () => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value.replace(/\s/g, ""),
+      [name]: value,
     });
   };
 
   const checkEmail = () => {
     var isValid = true;
+    let err = {};
+    if (!formData.first_name || !formData?.first_name?.trim()) {
+      isValid = false;
+      err["first_name_err"] = "Please enter first name!";
+    }
+
+    if (!formData.last_name || !formData?.last_name?.trim()) {
+      isValid = false;
+     
+      err["last_name_err"] = "Please enter last name!";
+    }
 
     if(!formData.email || !formData.email.trim()){
       isValid = false;
-      toast.error('Please enter Email!')
+      err["email_err"] = "Please enter the email!"
     }
 
-    if (typeof formData.email !== "undefined") {
+    else if (typeof formData.email !== "undefined") {
       let lastAtPos = formData.email.lastIndexOf("@");
       let lastDotPos = formData.email.lastIndexOf(".");
       if (
@@ -54,10 +66,10 @@ const Benefits = () => {
         )
       ) {
         isValid = false;
-        toast.error("Email is not valid");
+        err["email_err"] = "Email is not valid!";
       }
     }
-
+    setError(err);
     return isValid;
   };
 
@@ -208,10 +220,10 @@ const Benefits = () => {
                       autoComplete="given-name"
                       className="block w-full bg-white rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="first_name"
-                      required= {true}
                       value={formData.first_name}
                       onChange={handleInputChange}
                     />
+                      <div className='text-red-400'>{error.first_name_err}</div>
                   </div>
                 </div>
                 <div>
@@ -228,10 +240,10 @@ const Benefits = () => {
                       autoComplete="family-name"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="last_name"
-                      required= {true}
                       value={formData.last_name}
                       onChange={handleInputChange}
                     />
+                      <div className='text-red-400'>{error.last_name_err}</div>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -248,10 +260,10 @@ const Benefits = () => {
                       autoComplete="email"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="email"
-                      required= {true}
                       value={formData.email}
                       onChange={handleInputChange}
                     />
+                      <div className='text-red-400'>{error.email_err}</div>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -267,7 +279,6 @@ const Benefits = () => {
                       rows="4"
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="messages"
-                      required= {true}
                       value={formData.messages}
                       onChange={handleInputChange}
                     ></textarea>

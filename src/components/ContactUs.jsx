@@ -5,15 +5,16 @@ import admin from "../assets/images/admin.png";
 import place from "../assets/images/place.png";
 import { useState } from "react";
 import axios from "axios";
-import {toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loader from "./utils/Loader";
 import Button from "./Button";
 
 const ContactUs = () => {
   const navigate = useNavigate();
-  
-  const [isLoader,setIsLoader] = useState(false);
+
+  const [isLoader, setIsLoader] = useState(false);
+  const [error, setError] = useState({});
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,19 +28,28 @@ const ContactUs = () => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value.replace(/\s/g, ""),
+      [name]: value,
     });
   };
 
   const checkEmail = () => {
     var isValid = true;
-
-    if(!formData.email || !formData.email.trim()){
+    let err = {};
+    if (!formData.first_name || !formData?.first_name?.trim()) {
       isValid = false;
-      toast.error('Please enter Email!')
+      err["first_name_err"] = "Please enter first name!";
     }
 
-    if (typeof formData.email !== "undefined") {
+    if (!formData.last_name || !formData?.last_name?.trim()) {
+      isValid = false;
+     
+      err["last_name_err"] = "Please enter last name!";
+    }
+
+    if (!formData.email || !formData?.email?.trim()) {
+      isValid = false;
+      err["email_err"] = "Please enter email!";
+    } else if (typeof formData.email !== "undefined") {
       let lastAtPos = formData.email.lastIndexOf("@");
       let lastDotPos = formData.email.lastIndexOf(".");
       if (
@@ -52,50 +62,49 @@ const ContactUs = () => {
         )
       ) {
         isValid = false;
-        toast.error("Email is not valid");
+        err["email_err"] = "Email is not valid!";
       }
     }
-
+    setError(err);
     return isValid;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(checkEmail()){
-    setIsLoader(true)
-    const bodyFormData = new FormData();
-    bodyFormData.append("email", formData.email);
-    bodyFormData.append("first_name", formData.first_name);
-    bodyFormData.append("last_name", formData.last_name);
-    bodyFormData.append("messages", formData.messages);
+    if (checkEmail()) {
+      setIsLoader(true);
+      const bodyFormData = new FormData();
+      bodyFormData.append("email", formData.email);
+      bodyFormData.append("first_name", formData.first_name);
+      bodyFormData.append("last_name", formData.last_name);
+      bodyFormData.append("messages", formData.messages);
 
-    axios({
-      method: "POST",
-      url: "https://apihiaido.addonwebtech.com/public/api/contactUsData",
-      data: bodyFormData,
-    })
-      .then((response) => {
-        if (response?.data.status === true) {
-          setIsLoader(false);
-          toast.success(response?.data.message);
-          refreshPage();
-          setTimeout(() => {
-            navigate('/');
-          }, 2000);              
-         
-        } else {
-          setIsLoader(false);
-          toast.error("Something went wrong!");
-        }
+      axios({
+        method: "POST",
+        url: "https://apihiaido.addonwebtech.com/public/api/contactUsData",
+        data: bodyFormData,
       })
-      .catch((err) => {
-        setIsLoader(false)
-        console.error("Error while saving data" + err);
-        toast.error("Internal Server Error!");
-        refreshPage();
-        return;
-      });
-    } 
+        .then((response) => {
+          if (response?.data.status === true) {
+            setIsLoader(false);
+            toast.success(response?.data.message);
+            refreshPage();
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          } else {
+            setIsLoader(false);
+            toast.error("Something went wrong!");
+          }
+        })
+        .catch((err) => {
+          setIsLoader(false);
+          console.error("Error while saving data" + err);
+          toast.error("Internal Server Error!");
+          refreshPage();
+          return;
+        });
+    }
   };
 
   const refreshPage = () => {
@@ -227,9 +236,9 @@ const ContactUs = () => {
                       className="block w-full bg-white rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="first_name"
                       value={formData.first_name}
-                      required= {true}
                       onChange={handleInputChange}
                     />
+                     <div className='text-red-400'>{error.first_name_err}</div>
                   </div>
                 </div>
                 <div>
@@ -247,9 +256,9 @@ const ContactUs = () => {
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="last_name"
                       value={formData.last_name}
-                      required= {true}
                       onChange={handleInputChange}
                     />
+                       <div className='text-red-400'>{error.last_name_err}</div>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -267,9 +276,9 @@ const ContactUs = () => {
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="email"
                       value={formData.email}
-                      required= {true}
                       onChange={handleInputChange}
                     />
+                       <div className='text-red-400'>{error.email_err}</div>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -286,22 +295,17 @@ const ContactUs = () => {
                       className="block bg-white w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       name="messages"
                       value={formData.messages}
-                      required= {true}
                       onChange={handleInputChange}
                     ></textarea>
                   </div>
                 </div>
               </div>
               <div className="mt-8 flex justify-end">
-             
-            <Button type="submit" className=" mt-8 text-n-8 lg:flex">
-              {isLoader ? <Loader/> : "Send Message"}
-            </Button>
-        
-       
+                <Button type="submit" className=" mt-8 text-n-8 lg:flex">
+                  {isLoader ? <Loader /> : "Send Message"}
+                </Button>
               </div>
             </div>
-       
           </form>
         </div>
       </div>

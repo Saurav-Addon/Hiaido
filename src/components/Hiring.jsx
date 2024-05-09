@@ -11,6 +11,7 @@ const Hiring = () => {
   const navigate = useNavigate();
 
   const [isLoader, setIsLoader] = useState(false);
+  const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     email: "",
     last_name: "",
@@ -22,10 +23,27 @@ const Hiring = () => {
 
   const checkEmail = () => {
     var isValid = true;
+    let err = {};
+    
+    if (!formData.first_name || !formData?.first_name?.trim()) {
+      isValid = false;
+      err["first_name_err"] = "Please enter first name!";
+    }
+
+    if(!formData.document){
+      isValid = false;
+      err['document_err'] = "Please select a file!";
+    }
+
+    if (!formData.last_name || !formData?.last_name?.trim()) {
+      isValid = false;
+      err["last_name_err"] = "Please enter last name!";
+    }
 
     if (!formData.email || !formData.email.trim()) {
       isValid = false;
-      toast.error("Please enter Email!");
+      err['email_err'] = "Please enter the email!";
+
     } else if (typeof formData.email !== "undefined") {
       let lastAtPos = formData.email.lastIndexOf("@");
       let lastDotPos = formData.email.lastIndexOf(".");
@@ -39,17 +57,20 @@ const Hiring = () => {
         )
       ) {
         isValid = false;
-        toast.error("Email is not valid");
+        err["email_err"] = "Email is not valid!"
       }
     }
 
     if (!formData.phone) {
       isValid = false;
-      toast.error("Please enter mobile");
+      err["phone_err"] = "Please enter phone number!";
+
     } else if (!/^\d{8,}$/.test(formData.phone)) {
       isValid = false;
-      toast.error("Please enter a valid mobile");
+      err["phone_err"] = "Enter valid phone number!";
     }
+
+    setError(err);
 
     return isValid;
   };
@@ -59,7 +80,7 @@ const Hiring = () => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value.replace(/\s/g, ""),
+      [name]: value,
     });
   };
 
@@ -146,8 +167,8 @@ const Hiring = () => {
               value={formData.email}
               className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 appearance-none dark:text-white  dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
               placeholder=" "
-              required
             />
+              <div className='text-red-400'>{error.email_err}</div>
             <label
               htmlFor="email"
               className="placeholder:peer-focus:font-medium absolute text-sm text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -166,8 +187,8 @@ const Hiring = () => {
                 id="floating_first_name"
                 className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
                 placeholder=" "
-                required
               />
+               <div className='text-red-400'>{error.first_name_err}</div>
               <label
                 htmlFor="first_name"
                 className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -184,8 +205,9 @@ const Hiring = () => {
                 id="floating_last_name"
                 className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
                 placeholder=" "
-                required
+               
               />
+                <div className='text-red-400'>{error.last_name_err}</div>
               <label
                 htmlFor="last_name"
                 className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -896,8 +918,8 @@ const Hiring = () => {
                 id="phone"
                 className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
                 placeholder=" "
-                required
               />
+                <div className='text-red-400'>{error.phone_err}</div>
               <label
                 htmlFor="phone"
                 className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -911,9 +933,10 @@ const Hiring = () => {
             type="file"
             id="myFile"
             name="document"
-            required
           />
+            <div className='text-red-400'>{error.document_err}</div>
           <div>
+            
             <Button type="submit" className=" mt-8 lg:flex">
               {isLoader ? <Loader /> : "Submit"}
             </Button>
