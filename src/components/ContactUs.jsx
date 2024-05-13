@@ -3,7 +3,7 @@ import email from "../assets/images/email.png";
 import phone from "../assets/images/phone.png";
 import admin from "../assets/images/admin.png";
 import place from "../assets/images/place.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ const ContactUs = () => {
 
   const [isLoader, setIsLoader] = useState(false);
   const [error, setError] = useState({});
+
+  useEffect(() => {
+		document.title = "Hiaido | Contact Us";
+	  }, [])
 
   const [formData, setFormData] = useState({
     email: "",

@@ -1,7 +1,7 @@
 import Header from "./Header";
 import "../index.css";
 import Button from "./Button";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,10 @@ import Loader from "./utils/Loader";
 
 const Hiring = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+		document.title = "Hiaido | Hiring";
+	  }, [])
 
   const [isLoader, setIsLoader] = useState(false);
   const [error, setError] = useState({});

@@ -120,7 +120,7 @@ const Hero = () => {
               required={true}
             />
             <Button type="submit">
-              {isLoader ? <Loader /> : "Request a Demo"}
+              {isLoader ? <Loader /> : "Request Demo"}
             </Button>
           </div>
         </form>

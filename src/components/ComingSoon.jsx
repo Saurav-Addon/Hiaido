@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import Typewriter from "./TypeWriter";
 
 
 const ComingSoon = () => {
+  useEffect(() => {
+		document.title = "Hiaido | Subscription";
+	  }, [])
+
   return (
     <>
       {/* <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden"> */}

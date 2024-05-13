@@ -122,7 +122,7 @@ const Benefits = () => {
        <div className="container relative z-2">
        <div className="flex font-bold  flex-col  flex-wrap justify-center items-center mb-8">
         <p className='text-white font-Bungee lg:text-5xl'> Build Faster, Build Better, Build With AI</p>
-        <p className='text-white type2 mt-2 lg:text-3xl '> automate everything, almost, literally...</p>
+        <p className='text-white type2 mt-2 lg:text-3xl '> automate anything, almost, literally...</p>
         </div>
         <Heading
           className="md:max-w-md p-8 lg:max-w-2xl"
@@ -132,9 +132,11 @@ const Benefits = () => {
 
         <div className="flex flex-wrap justify-center gap-10 mb-10">
         
-            <img src={aws} height={30} width={85}  alt="aws"/>
-            <img src={azure} alt="azure"/>
-            <img src={gcp} alt="gcp"/>
+        <div className=' w-32 '>
+            <img src={aws}   alt="aws"/>
+            </div>
+            <div className='w-32 '><img src={azure}    alt="azure"/></div>
+            <div className='w-32 '><img src={gcp}   alt="gcp"/></div>
         </div>
         <div className="relative h-auto isolate bg-n-8">
         <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 lg:grid-cols-2">

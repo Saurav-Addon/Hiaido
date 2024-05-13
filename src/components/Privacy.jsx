@@ -1,8 +1,12 @@
 import { hiaido } from "../assets";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useEffect } from "react";
 
 const Privacy = () => {
+    useEffect(() => {
+		document.title = "Hiaido | Privacy";
+	  }, [])
   return (
     <>
       <Header />

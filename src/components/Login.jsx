@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import { hiaido } from "../assets";
 
 const Login = () => {
+  useEffect(() => {
+		document.title = "Hiaido | Sign In";
+	  }, [])
+    
   return (
 
 <section className="flex flex-col md:flex-row h-screen items-center">

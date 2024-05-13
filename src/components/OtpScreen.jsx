@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { hiaido } from "../assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +7,11 @@ import { toast } from "react-toastify";
 const OtpScreen = ({ numberOfDigits = 6 }) => {
   const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
   const [otpError, setOtpError] = useState(null);
+
+  useEffect(() => {
+		document.title = "Hiaido | OTP Verification";
+	  }, [])
+
   const otpBoxReference = useRef([]);
 
   const navigate = useNavigate();

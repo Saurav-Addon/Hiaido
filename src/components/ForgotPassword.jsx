@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { hiaido } from "../assets";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,10 @@ import { toast } from "react-toastify";
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+		document.title = "Hiaido | Forgot-Password";
+	  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { hiaido } from "../assets";
 import Eye from "../assets/images/Vector.png";
 import EyeOff from "../assets/images/Vector-1.png";
@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 const Resetshowpassword = () => {
   const [showpassword, setShowpassword] = React.useState(false);
   const [showcfpassword, setShowCfpassword] = React.useState(false);
+
+  useEffect(() => {
+		document.title = "Hiaido | Reset Password";
+	  }, [])
 
   const userId = window.location.href.split("=")[1];
 
