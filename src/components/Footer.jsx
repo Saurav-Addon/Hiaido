@@ -14,7 +14,7 @@ const Footer = () => {
         to="/privacy"
         className=" text-xs text-white lg:block"
       >
-       Privacy
+       Privacy Policy
       </NavLink>
       </p>
       <p className=" text-xl text-white lg:block">
