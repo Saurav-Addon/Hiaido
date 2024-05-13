@@ -21,7 +21,7 @@ const Hero = () => {
 
       axios({
         method: "POST",
-        url: "https://apihiaido.addonwebtech.com/public/api/demo",
+        url: "https://api.hiaido.com/public/api/demo",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",

@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
+import { NavLink } from "react-router-dom";
 
 import { hiaido } from "../assets";
 import { navigation } from "../constants";
@@ -35,68 +36,71 @@ const Header = () => {
         openNavigation ? "bg-n-8" : "bg-n-8/90 backdrop-blur-sm"
       }`}
     >
-      <div className="flex items-center mt-4 mb-2 px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
-        <Link className="block w-[12rem] xl:mr-8" to='/'>
-          <img src={hiaido}  alt="hiaido" />
-        </Link>
+      <div className="flex items-center justify-between">
+        <div className="flex  md:gap-4 items-center mt-4 mb-2 px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
+          <NavLink className="block w-[12rem] xl:mr-8" to="/">
+            <img src={hiaido} alt="hiaido" />
+          </NavLink>
 
-        <nav
-          className={`${
-            openNavigation ? "flex" : "hidden"
-          } fixed top-[7rem] left-0 right-0 bottom-0  lg:static lg:flex lg:mx-auto lg:bg-transparent`}
-        >
-      <div className="relative lg:hidden z-2 flex flex-col items-center justify-center m-auto lg:flex-row">
-            {navigation.map((item) => (
-              <Link
-                key={item.id}
-                to={item.url}
-                onClick={handleClick}
-                className={`block relative font-code text-2xl uppercase text-n-1 transition-colors hover:text-color-1 ${
-                  item.onlyMobile ? "lg:hidden" : ""
-                } px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
-                  item.url === pathname.hash
-                    ? "z-2 lg:text-n-1"
-                    : "lg:text-n-1/50"
-                } lg:leading-5 lg:hover:text-n-1 xl:px-12`}
-              >
-                {item.title}
-              </Link>
-            ))}
-          </div>
-          
+          <nav
+            className={`${
+              openNavigation ? "flex" : "hidden"
+            } fixed top-[7rem] left-0 right-0 bottom-0  lg:static lg:flex  lg:bg-transparent`}
+          >
+            <div className="relative  z-2 flex flex-col items-center justify-center m-auto lg:flex-row">
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.id}
+                  to={item.to}
+                  onClick={handleClick}
+                  className={`block relative font-code text-2xl  text-n-1 transition-colors hover:text-color-1 ${
+                    item.onlyMobile ? "lg:hidden" : ""
+                  } px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
+                    item.to === pathname.hash
+                      ? "z-2 lg:text-n-1"
+                      : "lg:text-n-1/50"
+                  } lg:leading-5 lg:hover:text-n-1 xl:px-12`}
+                >
+                  {item.title}
+                </NavLink>
+              ))}
+            </div>
 
-          <HamburgerMenu />
-        </nav>
+            <HamburgerMenu />
+          </nav>
 
-        <Link
-          to="/hiring"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-          Hiring
-        </Link>
-        <Link
-          to="/contact-us"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-         Contact US
-        </Link>
-        <Link
-          to="/pricing"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-         Pricing
-        </Link>
-        <Button className="hidden lg:flex" href="/login">
-          Sign In to Web portal
-        </Button>
+          <NavLink
+            to="/hiring"
+            className=" hidden mr-8 fon text-n-1/50 transition-colors hover:text-n-1 lg:block"
+          >
+            Hiring
+          </NavLink>
+          <NavLink
+            to="/contact-us"
+            className=" hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+          >
+            Contact Us
+          </NavLink>
+          <NavLink
+            to="/Pricing"
+            className=" hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+          >
+            Pricing
+          </NavLink>
+        </div>
+        <div className="px-5 flex items-center justify-center gap-8">
+          <Button className="hidden lg:flex" href="/login">
+            Sign In
+          </Button>
 
-        <Button
-          className="ml-auto lg:hidden"
-          px="px-3"
-          onClick={toggleNavigation}
-        >
-          <MenuSvg openNavigation={openNavigation} />
-        </Button>
+          <Button
+            className="ml-auto lg:hidden"
+            px="px-3"
+            onClick={toggleNavigation}
+          >
+            <MenuSvg openNavigation={openNavigation} />
+          </Button>
+        </div>
       </div>
     </div>
   );

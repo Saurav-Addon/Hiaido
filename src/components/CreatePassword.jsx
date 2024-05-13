@@ -42,7 +42,7 @@ const CreatePassword = () => {
       e.preventDefault();
       if (checkPassword(password.new_password, password.confirm_password)) {
         setPassErr("");
-        const url = "https://apihiaido.addonwebtech.com/public/api/createPassword";
+        const url = "https://api.hiaido.com/public/api/createPassword";
   
         const bodyFormData = new URLSearchParams();
         bodyFormData.append("new_password", password.new_password);

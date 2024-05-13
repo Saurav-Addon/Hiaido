@@ -99,7 +99,7 @@ const Hiring = () => {
 
       axios({
         method: "POST",
-        url: "https://apihiaido.addonwebtech.com/public/api/hiringData",
+        url: "https://api.hiaido.com/public/api/hiringData",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",

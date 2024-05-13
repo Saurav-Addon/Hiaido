@@ -14,7 +14,7 @@ const PricingList = () => {
     if (!selectedCard) {
       return 'javascript:void(0)'; // Prevent default behavior initially
     }
-    return `https://apihiaido.addonwebtech.com/public/checkout/${parseInt(selectedCard)+1}`;
+    return `https://api.hiaido.com/public/checkout/${parseInt(selectedCard)+1}`;
   };
   return (
     <div className="flex gap-[1rem] max-lg:flex-wrap">

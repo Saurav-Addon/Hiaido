@@ -86,7 +86,7 @@ const Benefits = () => {
 
     axios({
       method: "POST",
-      url: "https://apihiaido.addonwebtech.com/public/api/contactUsData",
+      url: "https://api.hiaido.com/public/api/contactUsData",
       data: bodyFormData,
     }).then((response) => {
         if (response?.data.status === true) {

@@ -10,8 +10,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url =
-      "https://apihiaido.addonwebtech.com/public/api/sendVerificationCode";
+    const url =  "https://api.hiaido.com/public/api/sendVerificationCode";
 
     const bodyFormData = new URLSearchParams();
     bodyFormData.append("email", email);

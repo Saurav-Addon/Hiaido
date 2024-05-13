@@ -44,8 +44,7 @@ const OtpScreen = ({ numberOfDigits = 6 }) => {
       setOtpError(""); // Clear any previous error messages
 
       try {
-        const url =
-          "https://apihiaido.addonwebtech.com/public/api/postVerificationCode";
+        const url ="https://api.hiaido.com/public/api/postVerificationCode";
         const bodyFormData = new URLSearchParams();
         bodyFormData.append("email", state); // Replace "state" with the actual email state variable
         bodyFormData.append("verification_code", parseInt(otp.join("")));
