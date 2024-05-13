@@ -122,7 +122,7 @@ const Benefits = () => {
        <div className="container relative z-2">
        <div className="flex font-bold  flex-col  flex-wrap justify-center items-center mb-8">
         <p className='text-white font-Bungee lg:text-5xl'> Build Faster, Build Better, Build With AI</p>
-        <p className='text-white type2 mt-2 lg:text-3xl '> automate anything, almost, literally...</p>
+        <p className='text-white type2 mt-2 lg:text-3xl lg:mt-5'> automate anything, almost, literally...</p>
         </div>
         <Heading
           className="md:max-w-md p-8 lg:max-w-2xl"
